@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Projet Vésuve</title>
+  <link rel="icon" type="image/x-icon" href="svg/favicon2.png">
+  <!--<script src="data/donneesgeographiques.geojson"></script>-->
+  <link rel="stylesheet" href="src/stylesheet.css" />
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css"
+    integrity="sha256-kLaT2GOSpHechhsozzB+flnD+zUyjE2LlfWPgU04xyI=" crossorigin="" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"
+    integrity="sha256-WBkoXOwTeyKclOHuWtc+i2uENFpDZ9YPdf5Hf+D7ewM=" crossorigin=""></script>
+  <script type="module" src="/src/index.js" defer></script>
+</head>
+
+<body>
+  <header>
+    <h1 id="title">Petite histoire du Vesuve</h1>
+  </header>
+  <section id="scrolly">
+    <div class="scroll__graphic">
+      <!--C'est là que vous allez mettre votre svg qui évolue -->
+      <svg id="mon-svg"></svg>
+      <!--C'est là que vous allez mettre votre svg qui évolue   <div id="map"></div>-->
+      <!--La carte va s'insérer depuis le -->
+    </div>
+    </div>
+
+    <!-- step-text container-->
+    <div class="scroll__text">
+      <div class="step" data-step="1">
+        <h1>Localisation et caractéristiques</h1>
+        <p>
+          Le vesuve est situé dans la région de Naples, en Italie.
+          <ul>
+            <li>40° 49′ 17″ nord, 14° 25′ 32″</li>
+            <li>1 281 mètres de hauteur</li>
+          </ul> 
+        </p>
+      </div>
+      <div class="step" data-step="2">
+        <h1>Habiter près d'un volcan</h1>
+        <h3>Un risque mesuré ?</h3>
+        <p>
+          Habiter près d'un volcan actif est un risque.
+          Cependant, les habitants peuvent bénéficier de la fertilité des sols volcaniques.
+          L'accès privilégié à la Méditerranée, par la baie de Naples, est un autre atout de cette région.
+          En effet, cela a offert un avantage stratégique et commercial qui a permit le développement de la région durant l'antiquité.
+          Aujourd'hui, c'est l'Osservatorio Vesuviano situé au pied du volcan qui surveille son activité.
+        </p>
+      </div>
+      <div class="step" data-step="3">
+        <h1>79 ap. J.C. : le drame </h1>
+        <p>
+          L'éruption la plus connue du Vesuve est celle de 79 ap. J.C. qui a détruit les villes de Pompéi et
+          d'Herculanum.
+        </p>
+        <ul>
+          <li>3,3 km3 de téphras retombe sur la région</li>
+          <li>Environs 3000 personnes sont tuées</li>
+        </ul>
+      </div>
+      <div class="step" data-step="4">
+        <h1>1823</h1>
+        <p>
+          En 1823, un cartographe du nom de Jean Auldjo décide de cartographier les éruptions du Vésuve.
+          Il dessine les coulées des éruptions principales entre 1631 à 1831. Pour chaque éruption, il lui donne une couleur et indique la date.
+        </p>
+      </div>
+      <div class="step" data-step="5">
+        <h1>"Vues du Vesuve</h1>
+        <h3>Avec un précis de ses éruptions principales"</h3>
+        <p>
+          Nous avons superposé la carte de Jean Auldjo avec une carte satellite du volcan pour voir l'ampleur des éruptions sur le territoire actuel.
+          De plus, nous avons vectorisé les coulées pour les rendre interactives. Vous pouvez passer la souris sur une coulée pour faire apparaître la date de l'éruption.
+          Le slider vous permet de visualiser l'ancienne carte ou la carte satellite.
+          <br>
+          Nous avons laissé certaines coulées sans date, car les couleurs sur la carte de l'époque ne sont pas assez contrastées pour les différencier.
+        </p>
+      </div>
+    </div>
+  </section>
+  <footer>
+    Un projet de Marine Hosch et Laura D'Addese, VisualDon, 2023
+  </footer>
+</body>
+
+</html>

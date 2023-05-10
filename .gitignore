@@ -1,0 +1,3 @@
+# Ignore npm config.
+/dist
+/node_modules

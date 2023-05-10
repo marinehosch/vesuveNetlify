@@ -1,0 +1,126 @@
+body {
+  font-family: 'Roboto', sans-serif;
+  background-color: #fcfaea;
+}
+
+header {
+  margin: auto;
+  width: 100%;
+  height: fit-content;
+  padding: 0;
+  position: fixed;
+}
+
+#title {
+  font-size: 3rem;
+  margin-left: 3rem;
+}
+
+
+#scrolly {
+  position: relative;
+			display: -webkit-box;
+			display: -ms-flexbox;
+			display: flex;
+			padding: 1rem;
+}
+
+#scrolly > * {
+  -webkit-box-flex: 1;
+			-ms-flex: 1;
+			flex: 1;
+}
+
+#mon-svg, #map {
+  position: fixed;
+  /* display: block;
+  height: calc(100vh - 100px); */
+  top: 50px;
+  right: center;
+  bottom: 0;
+  width: 65%;
+  height: 100%;
+  transition: ease-in-out 1s;
+
+}
+
+/*
+  Je redéfini la taille de la carte sinon on voit pas le footer (pourquoi?)
+  */
+
+#map {
+  width: 72%;
+  height: 95%;
+  bottom: fixed;
+  top: 0;
+  position: center;
+}
+
+.scroll_graphic {
+  position: -webkit-sticky;
+  position: sticky;
+  width: 100%;
+  margin: 0;
+  /* -webkit-transform: translate3d(0, 0, 0);
+  -moz-transform: translate3d(0, 0, 0);
+  transform: translate3d(0, 0, 0); */
+  /* background-color: #8a8a8a; */
+  z-index: 0;
+}
+
+.scroll__text{
+  position: relative;
+			padding: 0 1rem;
+			max-width: 20rem;
+      margin-top: 100px;
+}
+
+svg .scroll__graphic {
+  text-align: center;
+			padding: 1rem;
+			position: absolute;
+			top: 50%;
+			left: 50%;
+			-moz-transform: translate(-50%, -50%);
+			-webkit-transform: translate(-50%, -50%);
+			transform: translate(-50%, -50%);
+			font-size: 8rem;
+			font-weight: 900;
+			color: #fff;
+}
+
+/*
+  css pour le texte sur le côté
+  */
+
+.step:last-child {
+  margin-bottom: 40;
+}
+
+.step.is-active {
+  margin-top: 100px;
+}
+
+.step p {
+  text-align: center;
+  padding: 1rem;
+  font-size: 1.2rem;
+}
+
+.leaflet-container {
+  overflow: unset;
+}
+
+.info {
+  padding: 6px 8px;
+  background: #fff;
+  background: rgba(255, 255, 255, 0.8);
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+  border-radius: 5px;
+}
+
+.info h4 {
+  margin: 0 0 0px;
+  color: black;
+  font-size: 12px;
+}
