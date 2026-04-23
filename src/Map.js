@@ -7,7 +7,8 @@ import GeoRasterLayer from "georaster-layer-for-leaflet";
 // Expose L globalement AVANT d'importer le plugin side-by-side
 // car leaflet-side-by-side n'est pas compatible ESM et cherche window.L
 window.L = L;
-import "leaflet-side-by-side";
+const createMap = async () => {
+  await import("leaflet-side-by-side");;
 
 const createMap = () => {
   json("data/donneesgeographiques.geojson").then((data) => {
