@@ -32,19 +32,18 @@ function handleStepEnter(response) {
   });
 
   function loadSVG(url) {
-    // Nettoyer la zone graphique
-    d3.select("#map").remove();
-    d3.select("#mon-svg").selectAll("*").remove();
+  // Nettoyer la zone
+  d3.select("#map").remove();
+  const container = d3.select("#mon-svg");
+  container.selectAll("*").remove();
 
-    d3.svg(url).then(function (data) {
-      let parser = new DOMParser();
-      let svgString = new XMLSerializer().serializeToString(
-        data.documentElement
-      );
-      let svgDoc = parser.parseFromString(svgString, "image/svg+xml");
-      let svgNode = svgDoc.getElementsByTagName("svg")[0];
-      d3.select("#mon-svg").node().appendChild(svgNode);
-    });
+  // On utilise d3.xml pour charger un fichier externe
+  d3.xml(url).then((data) => {
+    const svgNode = data.documentElement;
+    container.node().appendChild(svgNode);
+  }).catch(error => {
+    console.error("Erreur de chargement du SVG :", error);
+  });
   }
 
   switch (currentIndex) {
