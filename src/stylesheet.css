@@ -9,6 +9,7 @@ header {
   height: fit-content;
   padding: 0;
   position: fixed;
+  z-index: 1000; /* au-dessus de la carte */
 }
 
 #title {
@@ -16,85 +17,56 @@ header {
   margin-left: 3rem;
 }
 
-
 #scrolly {
   position: relative;
-			display: -webkit-box;
-			display: -ms-flexbox;
-			display: flex;
-			padding: 1rem;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  padding: 1rem;
 }
 
 #scrolly > * {
   -webkit-box-flex: 1;
-			-ms-flex: 1;
-			flex: 1;
+  -ms-flex: 1;
+  flex: 1;
 }
 
-#mon-svg, #map {
+/* SVG et carte : positionnés en fixed, côté droit */
+#mon-svg,
+#map {
   position: fixed;
-  /* display: block;
-  height: calc(100vh - 100px); */
-  top: 50px;
-  right: center;
-  bottom: 0;
+  top: 60px; /* décalé sous le header fixe */
+  right: 0;
   width: 65%;
-  height: 100%;
+  height: calc(100vh - 60px); /* hauteur en px, pas en % */
   transition: ease-in-out 1s;
-
+  z-index: 1;
 }
 
-/*
-  Je redéfini la taille de la carte sinon on voit pas le footer (pourquoi?)
-  */
-
+/* Redéfinition spécifique pour la carte Leaflet */
 #map {
   width: 72%;
-  height: 95%;
-  bottom: fixed;
-  top: 0;
-  position: center;
+  /* on garde le même top/height que ci-dessus */
 }
 
-.scroll_graphic {
+/* ✅ Correction : double underscore pour matcher le HTML */
+.scroll__graphic {
   position: -webkit-sticky;
   position: sticky;
   width: 100%;
   margin: 0;
-  /* -webkit-transform: translate3d(0, 0, 0);
-  -moz-transform: translate3d(0, 0, 0);
-  transform: translate3d(0, 0, 0); */
-  /* background-color: #8a8a8a; */
   z-index: 0;
 }
 
-.scroll__text{
+.scroll__text {
   position: relative;
-			padding: 0 1rem;
-			max-width: 20rem;
-      margin-top: 100px;
+  padding: 0 1rem;
+  max-width: 20rem;
+  margin-top: 100px;
 }
-
-svg .scroll__graphic {
-  text-align: center;
-			padding: 1rem;
-			position: absolute;
-			top: 50%;
-			left: 50%;
-			-moz-transform: translate(-50%, -50%);
-			-webkit-transform: translate(-50%, -50%);
-			transform: translate(-50%, -50%);
-			font-size: 8rem;
-			font-weight: 900;
-			color: #fff;
-}
-
-/*
-  css pour le texte sur le côté
-  */
 
 .step:last-child {
-  margin-bottom: 40;
+  margin-bottom: 40px; /* ✅ ajout de l'unité px */
 }
 
 .step.is-active {
@@ -107,13 +79,13 @@ svg .scroll__graphic {
   font-size: 1.2rem;
 }
 
+/* Leaflet */
 .leaflet-container {
   overflow: unset;
 }
 
 .info {
   padding: 6px 8px;
-  background: #fff;
   background: rgba(255, 255, 255, 0.8);
   box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
   border-radius: 5px;
