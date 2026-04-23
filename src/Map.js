@@ -26,13 +26,11 @@ const createMap = () => {
 
       map.createPane("left");
       map.createPane("right");
-
       let basemap = L.tileLayer(
-        "https://tile.thunderforest.com/atlas/{z}/{x}/{y}.png?apikey=9a22e6ca54f54449980daee2749bfe1c",
+        "https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png",
         {
           maxZoom: 20,
-          attribution: "&copy; Thunderforest, OpenMapTiles, OpenStreetMap contributors",
-          apiKey: "9a22e6ca54f54449980daee2749bfe1c",
+          attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
           pane: "left",
         }
       ).addTo(map);
