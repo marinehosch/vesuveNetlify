@@ -1,103 +1,73 @@
 import * as d3 from "d3";
 import scrollama from "scrollama";
-// import createMap from "./Map";
+import createMap from "./Map";
 
 const scrolly = d3.select("#scrolly");
 const graphic = scrolly.select(".scroll__graphic");
-const text = scrolly.select(".scroll__text");
 const step = scrolly.selectAll(".step");
 
-// initialize the scrollama
 let scroller = scrollama();
 
 function handleResize() {
   const stepH = Math.floor(window.innerHeight * 0.75);
   step.style("height", stepH + "px");
-
-  const figureHeight = window.innerHeight / 2;
-  const figureMarginTop = (window.innerHeight - figureHeight) / 2;
-
-  graphic
-    .style("height", figureHeight + "px")
-    .style("top", figureMarginTop + "px");
-
+  graphic.style("height", window.innerHeight + "px");
   scroller.resize();
 }
 
 function handleStepEnter(response) {
   let currentIndex = response.index;
 
-  step.classed("is-active", function (d, i) {
-    return i === currentIndex;
-  });
+  step.classed("is-active", (d, i) => i === currentIndex);
 
-function loadSVG(url) {
-  d3.select("#map").remove();
-  
   const container = d3.select("#mon-svg");
-  container.selectAll("*").remove();
 
-  d3.xml(url).then((data) => {
-    const svgNode = data.documentElement;
-    
-    container.node().appendChild(svgNode);
-  }).catch(err => console.error("Erreur chargement SVG:", err));
-}
-
-  switch (currentIndex) {
-    case 0:
-      loadSVG("svg/fond.svg");
-      break;
-    case 1:
-      loadSVG("svg/volcan2.svg");
-      break;
-    case 2:
-      loadSVG("svg/volcan3.svg");
-      break;
-    case 3:
-      loadSVG("svg/volcan4.svg");
-      break;
-    case 4:
-      d3.select("#mon-svg").selectAll("*").remove();
-
-      if (d3.select("#map").empty()) {
-        d3.select(".scroll__graphic")
-          .append("div")
-          .attr("id", "map")
-          .style("width", "72%")
-          .style("height", (window.innerHeight - 60) + "px") // hauteur en px
-          .style("position", "fixed")
-          .style("top", "60px")
-          .style("right", "0");
-
-        // Laisser le DOM se mettre à jour avant d'initialiser Leaflet
-        // setTimeout(() => {
-        //   createMap();
-        // }, 50);
-      }
-      break;
+  // CAS ÉTAPE 5 : LA CARTE
+  if (currentIndex === 4) {
+    container.selectAll("*").remove(); // On vide les SVGs
+    if (d3.select("#map").empty()) {
+      d3.select(".scroll__graphic")
+        .append("div")
+        .attr("id", "map")
+        .style("width", "100%")
+        .style("height", "100%");
+      
+      setTimeout(() => { createMap(); }, 50);
+    }
+    return;
   }
-}
 
-function handleStepExit(response) {
-  let currentIndex = response.index;
-  let currentDirection = response.direction;
+  // CAS ÉTAPES 1 À 4 : LES SVGS CUMULÉS
+  d3.select("#map").remove(); // On enlève la carte si on remonte
+  container.selectAll("*").remove(); // Reset pour ré-empiler proprement
+
+  const svgsToLoad = [];
+  if (currentIndex >= 0) svgsToLoad.push("svg/fond.svg");
+  if (currentIndex >= 1) svgsToLoad.push("svg/volcan2.svg");
+  if (currentIndex >= 2) svgsToLoad.push("svg/volcan3.svg");
+  if (currentIndex >= 3) svgsToLoad.push("svg/volcan4.svg");
+
+  Promise.all(svgsToLoad.map(url => d3.xml(url)))
+    .then(results => {
+      results.forEach(data => {
+        container.node().appendChild(data.documentElement);
+      });
+    })
+    .catch(err => console.error("Erreur superposition SVG:", err));
 }
 
 function init() {
   handleResize();
-
   scroller
     .setup({
       container: "#scrolly",
       graphic: ".scroll__graphic",
       text: ".scroll__text",
-      step: ".scroll__text .step",
+      step: ".step",
       offset: 0.5,
       debug: false,
     })
-    .onStepEnter(handleStepEnter)
-    .onStepExit(handleStepExit);
+    .onStepEnter(handleStepEnter);
 
   window.addEventListener("resize", handleResize);
 }
