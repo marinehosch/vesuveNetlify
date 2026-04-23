@@ -1,8 +1,13 @@
 import { json } from "d3-fetch";
 import * as L from "leaflet";
-import "./plugins/leaflet-side-by-side-custom.js";
+import "leaflet/dist/leaflet.css";
 import parseGeoraster from "georaster";
 import GeoRasterLayer from "georaster-layer-for-leaflet";
+
+// Expose L globalement AVANT d'importer le plugin side-by-side
+// car leaflet-side-by-side n'est pas compatible ESM et cherche window.L
+window.L = L;
+import "leaflet-side-by-side";
 
 const createMap = () => {
   json("data/donneesgeographiques.geojson").then((data) => {
@@ -45,10 +50,7 @@ const createMap = () => {
             .sideBySide([basemap], [historicMap])
             .addTo(map);
 
-          // fixerZoom déplacé ici, après que tout est chargé
           fixerZoom(map, 12.5);
-
-          // Forcer Leaflet à recalculer la taille du conteneur
           map.invalidateSize();
         });
       });
