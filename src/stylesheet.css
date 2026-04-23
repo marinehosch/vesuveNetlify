@@ -51,7 +51,6 @@ header {
 }
 
 .scroll__graphic {
-  position: -webkit-sticky;
   position: sticky;
   width: 100%;
   margin: 0;
@@ -74,7 +73,7 @@ header {
 }
 
 .step p {
-  text-align: center;
+  text-align: right;
   padding: 1rem;
   font-size: 1.2rem;
 }
