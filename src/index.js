@@ -32,27 +32,16 @@ function handleStepEnter(response) {
   });
 
 function loadSVG(url) {
-  // 1. Nettoyage des anciens éléments
   d3.select("#map").remove();
+  
   const container = d3.select("#mon-svg");
   container.selectAll("*").remove();
 
-  // 2. Chargement du fichier via d3.xml
   d3.xml(url).then((data) => {
-    // data est un document XML, on récupère l'élément <svg>
     const svgNode = data.documentElement;
     
-    // On l'ajoute au conteneur existant dans le DOM
     container.node().appendChild(svgNode);
-    
-    // Optionnel : s'assurer que le SVG prend toute la place
-    d3.select(svgNode)
-      .attr("width", "100%")
-      .attr("height", "100%")
-      .attr("preserveAspectRatio", "xMidYMid meet");
-  }).catch(error => {
-    console.error("Erreur lors du chargement du SVG :", error);
-  });
+  }).catch(err => console.error("Erreur chargement SVG:", err));
 }
 
   switch (currentIndex) {
