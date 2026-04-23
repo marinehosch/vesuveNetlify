@@ -19,7 +19,9 @@ const createMap = () => {
     initMap();
   }
 
- json("data/donneesgeographiques.geojson").then((data) => {
+  // C'EST ICI QU'IL MANQUAIT LA DÉCLARATION DE LA FONCTION !
+  function initMap() {
+    json("data/donneesgeographiques.geojson").then((data) => {
       let map = L.map("map").setView([40.82145693478615, 14.425858810559106], 12);
 
       map.createPane("left");
@@ -59,18 +61,15 @@ const createMap = () => {
             if (L.control.sideBySide) {
               L.control.sideBySide([basemap], [historicMap]).addTo(map);
               
-              // CORRECTION 2 : Bloquer la carte quand on touche au slider
+              // Bloquer la carte quand on touche au slider
               setTimeout(() => {
                 const slider = document.querySelector('.leaflet-sbs-range');
                 if (slider) {
-                  // Empêche le clic de passer à travers
                   L.DomEvent.disableClickPropagation(slider);
                   
-                  // Coupe le déplacement de la carte quand on clique
                   slider.addEventListener('mousedown', () => map.dragging.disable());
                   document.addEventListener('mouseup', () => map.dragging.enable());
                   
-                  // Même chose pour les écrans tactiles (smartphones)
                   slider.addEventListener('touchstart', () => map.dragging.disable(), {passive: true});
                   document.addEventListener('touchend', () => map.dragging.enable());
                 }
@@ -153,7 +152,7 @@ const createMap = () => {
         });
       }
     });
-  }
+  } 
 };
 
 export default createMap;
