@@ -6,9 +6,7 @@ import GeoRasterLayer from "georaster-layer-for-leaflet";
 
 window.L = L;
 
-const createMap = async () => {
-  await import("leaflet-side-by-side");
-
+const createMap = () => {
   json("data/donneesgeographiques.geojson").then((data) => {
     let map = L.map("map").setView([40.82145693478615, 14.425858810559106], 12);
 
@@ -44,7 +42,9 @@ const createMap = async () => {
             pane: "right",
           }).addTo(map);
 
-          L.control.sideBySide([basemap], [historicMap]).addTo(map);
+          if (L.control.sideBySide) {
+            L.control.sideBySide([basemap], [historicMap]).addTo(map);
+          }
 
           fixerZoom(map, 12.5);
           map.invalidateSize();
@@ -110,7 +110,6 @@ const createMap = async () => {
           el.style.fillOpacity = 1;
           el.style.stroke = "white";
           el.style.opacity = 1;
-          el.style.weight = 2;
           el.parentNode.appendChild(el);
         }
       });
