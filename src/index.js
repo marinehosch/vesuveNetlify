@@ -49,16 +49,16 @@ function handleStepEnter(response) {
 
   switch (currentIndex) {
     case 0:
-      loadSVG("svg/fond.svg");
+      loadSVG("/public/svg/fond.svg");
       break;
     case 1:
-      loadSVG("svg/volcan2.svg");
+      loadSVG("/public/svg/volcan2.svg");
       break;
     case 2:
-      loadSVG("svg/volcan3.svg");
+      loadSVG("/public/svg/volcan3.svg");
       break;
     case 3:
-      loadSVG("svg/volcan4.svg");
+      loadSVG("/public/svg/volcan4.svg");
       break;
     case 4:
       // Nettoyer le SVG
