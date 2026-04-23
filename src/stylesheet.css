@@ -46,13 +46,10 @@ header {
   z-index: 1;
 }
 
-/* Redéfinition spécifique pour la carte Leaflet */
 #map {
   width: 72%;
-  /* on garde le même top/height que ci-dessus */
 }
 
-/* ✅ Correction : double underscore pour matcher le HTML */
 .scroll__graphic {
   position: -webkit-sticky;
   position: sticky;
@@ -69,7 +66,7 @@ header {
 }
 
 .step:last-child {
-  margin-bottom: 40px; /* ✅ ajout de l'unité px */
+  margin-bottom: 40px;
 }
 
 .step.is-active {
