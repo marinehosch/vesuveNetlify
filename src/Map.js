@@ -9,7 +9,6 @@ window.L = L;
 window.proj4 = proj4;
 
 const createMap = () => {
-  // Chargement dynamique du plugin pour éviter l'erreur "L is undefined"
   if (!document.getElementById("side-by-side-script")) {
     const script = document.createElement("script");
     script.id = "side-by-side-script";
@@ -20,17 +19,20 @@ const createMap = () => {
     initMap();
   }
 
-  function initMap() {
-    json("data/donneesgeographiques.geojson").then((data) => {
+ json("data/donneesgeographiques.geojson").then((data) => {
       let map = L.map("map").setView([40.82145693478615, 14.425858810559106], 12);
 
       map.createPane("left");
+      map.getPane("left").style.zIndex = 250; 
+      
       map.createPane("right");
+      map.getPane("right").style.zIndex = 250;
+
       let basemap = L.tileLayer(
         "https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png",
         {
           maxZoom: 20,
-          attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
+          attribution: '&copy; OpenStreetMap contributors &copy; CARTO',
           pane: "left",
         }
       ).addTo(map);
@@ -56,10 +58,28 @@ const createMap = () => {
 
             if (L.control.sideBySide) {
               L.control.sideBySide([basemap], [historicMap]).addTo(map);
+              
+              // CORRECTION 2 : Bloquer la carte quand on touche au slider
+              setTimeout(() => {
+                const slider = document.querySelector('.leaflet-sbs-range');
+                if (slider) {
+                  // Empêche le clic de passer à travers
+                  L.DomEvent.disableClickPropagation(slider);
+                  
+                  // Coupe le déplacement de la carte quand on clique
+                  slider.addEventListener('mousedown', () => map.dragging.disable());
+                  document.addEventListener('mouseup', () => map.dragging.enable());
+                  
+                  // Même chose pour les écrans tactiles (smartphones)
+                  slider.addEventListener('touchstart', () => map.dragging.disable(), {passive: true});
+                  document.addEventListener('touchend', () => map.dragging.enable());
+                }
+              }, 200);
             }
 
             fixerZoom(map, 12.5);
             map.invalidateSize();
+
           });
         });
 
