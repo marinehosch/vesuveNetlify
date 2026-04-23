@@ -1,36 +1,25 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Projet Vésuve</title>
   <link rel="icon" type="image/x-icon" href="svg/favicon2.png">
-  <!--<script src="data/donneesgeographiques.geojson"></script>-->
+  <!-- Leaflet CSS et JS supprimés ici : ils viennent du bundle Vite via Map.js -->
   <link rel="stylesheet" href="src/stylesheet.css" />
-  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css"
-    integrity="sha256-kLaT2GOSpHechhsozzB+flnD+zUyjE2LlfWPgU04xyI=" crossorigin="" />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
-  <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"
-    integrity="sha256-WBkoXOwTeyKclOHuWtc+i2uENFpDZ9YPdf5Hf+D7ewM=" crossorigin=""></script>
   <script type="module" src="/src/index.js" defer></script>
 </head>
-
 <body>
   <header>
     <h1 id="title">Petite histoire du Vesuve</h1>
   </header>
   <section id="scrolly">
     <div class="scroll__graphic">
-      <!--C'est là que vous allez mettre votre svg qui évolue -->
       <svg id="mon-svg"></svg>
-      <!--C'est là que vous allez mettre votre svg qui évolue   <div id="map"></div>-->
-      <!--La carte va s'insérer depuis le -->
     </div>
-    </div>
-
     <!-- step-text container-->
     <div class="scroll__text">
       <div class="step" data-step="1">
@@ -89,5 +78,4 @@
     Un projet de Marine Hosch et Laura D'Addese, VisualDon, 2023
   </footer>
 </body>
-
 </html>
