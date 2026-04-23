@@ -1,6 +1,7 @@
 body {
   font-family: 'Roboto', sans-serif;
   background-color: #fcfaea;
+  margin: 0; /* Évite les marges blanches par défaut */
 }
 
 header {
@@ -9,7 +10,9 @@ header {
   height: fit-content;
   padding: 0;
   position: fixed;
-  z-index: 1000; /* au-dessus de la carte */
+  top: 0; /* Assure que le header reste tout en haut */
+  z-index: 1000; /* Au-dessus de la carte */
+  background-color: #fcfaea; /* Empêche le texte de passer au travers */
 }
 
 #title {
@@ -19,66 +22,61 @@ header {
 
 #scrolly {
   position: relative;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
+  display: flex; /* Garde les éléments côte à côte */
   padding: 1rem;
 }
 
-#scrolly > * {
-  -webkit-box-flex: 1;
-  -ms-flex: 1;
-  flex: 1;
-}
-
-/* SVG et carte : positionnés en fixed, côté droit */
-#mon-svg {
-  width: 100%;
-  height: 100%;
-  display: block;
-#map {
-  position: fixed;
-  top: 60px; /* décalé sous le header fixe */
-  right: 0;
-  width: 65%;
-  height: calc(100vh - 60px); /* hauteur en px, pas en % */
-  transition: ease-in-out 1s;
-  z-index: 1;
-}
-
-#map {
-  width: 72%;
-}
-
-.scroll__graphic {
-  position: sticky;
-  width: 100%;
-  margin: 0;
-  z-index: 0;
-}
-
+/* --- LE TEXTE SUR LE CÔTÉ --- */
 .scroll__text {
   position: relative;
   padding: 0 1rem;
-  max-width: 20rem;
+  width: 28%; /* Le texte prend environ un quart de l'écran */
+  min-width: 250px; /* Évite que le texte soit trop écrasé sur petit écran */
   margin-top: 100px;
+  z-index: 10;
+}
+
+.step {
+  margin-bottom: 70vh; /* Garde beaucoup d'espace pour obliger à scroller */
 }
 
 .step:last-child {
   margin-bottom: 40px;
 }
 
-.step.is-active {
-  margin-top: 100px;
-}
-
 .step p {
-  text-align: right;
-  padding: 1rem;
+  text-align: left; /* Souvent plus lisible, mais tu peux remettre 'right' */
+  padding: 1rem 0;
   font-size: 1.2rem;
 }
 
-/* Leaflet */
+/* --- LE GRAPHIQUE ET LA CARTE --- */
+.scroll__graphic {
+  position: sticky;
+  top: 60px; /* Décalé sous le header fixe */
+  width: 72%; /* Prend tout le reste de l'espace à droite */
+  height: calc(100vh - 60px);
+  margin: 0;
+  z-index: 0;
+}
+
+#mon-svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+} /* <-- L'accolade manquante était ici ! */
+
+#map {
+  position: absolute; /* Se positionne par rapport à .scroll__graphic */
+  top: 0;
+  right: 0;
+  width: 100%;
+  height: 100%; 
+  transition: ease-in-out 1s;
+  z-index: 1;
+}
+
+/* --- LEAFLET --- */
 .leaflet-container {
   overflow: unset;
 }
@@ -91,7 +89,7 @@ header {
 }
 
 .info h4 {
-  margin: 0 0 0px;
+  margin: 0;
   color: black;
   font-size: 12px;
 }
