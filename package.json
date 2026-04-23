@@ -19,6 +19,7 @@
     "georaster-layer-for-leaflet": "^3.10.0",
     "intersection-observer": "^0.12.2",
     "leaflet": "^1.9.3",
+    "proj4": "^2.15.0",
     "scrollama": "^3.2.0",
     "topojson": "^3.0.2"
   }
