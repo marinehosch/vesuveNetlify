@@ -19,7 +19,6 @@
     "georaster-layer-for-leaflet": "^3.10.0",
     "intersection-observer": "^0.12.2",
     "leaflet": "^1.9.3",
-    "leaflet-side-by-side": "^2.2.0",
     "scrollama": "^3.2.0",
     "topojson": "^3.0.2"
   }
