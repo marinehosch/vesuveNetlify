@@ -6,24 +6,22 @@ import GeoRasterLayer from "georaster-layer-for-leaflet";
 
 const createMap = () => {
   json("data/donneesgeographiques.geojson").then((data) => {
-    //afficher la carte :
     let map = L.map("map").setView([40.82145693478615, 14.425858810559106], 12);
 
     map.createPane("left");
     map.createPane("right");
 
-    //j'ajoute un premier layer (carte actuelle)
     let basemap = L.tileLayer(
-      "     https://tile.thunderforest.com/atlas/{z}/{x}/{y}.png?apikey=9a22e6ca54f54449980daee2749bfe1c",
+      "https://tile.thunderforest.com/atlas/{z}/{x}/{y}.png?apikey=9a22e6ca54f54449980daee2749bfe1c",
       {
         maxZoom: 20,
         attribution:
           '&copy; <a href="http://www.thunderforest.com/">Thunderforest</a>, &copy; <a href="https://openmaptiles.org/">OpenMapTiles</a> &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors',
         apiKey: "9a22e6ca54f54449980daee2749bfe1c",
+        pane: "left",
       }
     ).addTo(map);
 
-    // geotiff layer
     const url_to_geotiff_file = "data/raster/carte_historique.tiff";
     fetch(url_to_geotiff_file)
       .then((response) => response.arrayBuffer())
@@ -39,68 +37,70 @@ const createMap = () => {
           let historicMap = new GeoRasterLayer({
             georaster: georaster,
             opacity: 0.7,
-            resolution: 200, // optional parameter for adjusting display resolution
+            resolution: 200,
             pane: "right",
           }).addTo(map);
 
           L.control
-            .sideBySide([], [basemap, vectorLayer, historicMap])
+            .sideBySide([basemap], [historicMap])
             .addTo(map);
+
+          // fixerZoom déplacé ici, après que tout est chargé
+          fixerZoom(map, 12.5);
+
+          // Forcer Leaflet à recalculer la taille du conteneur
+          map.invalidateSize();
         });
       });
 
-    //fixer le zoom
     function fixerZoom(map, level) {
       map.setMinZoom(level);
       map.setMaxZoom(level);
-      +map.setZoom(level);
+      map.setZoom(level);
     }
-
-    fixerZoom(map, 12.5);
 
     function getColor(d) {
       return d == 1
-        ? "#d12d38" //1701 couleur ok
+        ? "#d12d38"  // 1701
         : d == 2
-        ? "#1f78b4" //1820 couleur ok
+        ? "#1f78b4"  // 1820
         : d == 3
-        ? "#0002ff" //1712 couleur ok
+        ? "#0002ff"  // 1712
         : d == 4
-        ? "#ff7f00" //1812 couleur ok
+        ? "#ff7f00"  // 1812
         : d == 5
-        ? "#e4d97a" //1813 couleur ok
+        ? "#e4d97a"  // 1813
         : d == 6
-        ? "#ffffff" //existe pas...
+        ? "#ffffff"  // existe pas
         : d == 7
-        ? "#ff4fa1" //1810 couleur ok
+        ? "#ff4fa1"  // 1810
         : d == 8
-        ? "#9c264f" //1717 couleur ok
+        ? "#9c264f"  // 1717
         : d == 9
-        ? "#fb99a4" //1631 couleur ok
+        ? "#fb99a4"  // 1631
         : d == 10
-        ? "#d8a66a" //1734 couleur ok
+        ? "#d8a66a"  // 1734
         : d == 11
-        ? "#ad4832" //1822 couleur ok
+        ? "#ad4832"  // 1822
         : d == 12
-        ? "#88a758" //1779	 couleur ok
+        ? "#88a758"  // 1779
         : d == 13
-        ? "#57360f" //1771 couleur ok
+        ? "#57360f"  // 1771
         : d == 14
-        ? "#977f62" //1694 couleur ok
+        ? "#977f62"  // 1694
         : d == 15
-        ? "#b65e00" //1805 couleur ok
+        ? "#b65e00"  // 1805
         : d == 16
-        ? "#ef9c83" //1754 couleur ok
+        ? "#ef9c83"  // 1754
         : d == 17
-        ? "#91e9f7" //1786 couleur ok
+        ? "#91e9f7"  // 1786
         : d == 18
-        ? "#430109" //1806 couleur ok
+        ? "#430109"  // 1806
         : d == 19
-        ? "#261838" // s.d. couleur ok
+        ? "#261838"  // s.d.
         : "#ffffff";
     }
 
-    //afficher le style de base des features
     function style(feature) {
       return {
         fillColor: getColor(feature.properties.id),
@@ -109,7 +109,6 @@ const createMap = () => {
       };
     }
 
-    //ajout de légende
     let info = L.control();
     info.onAdd = function (map) {
       this._div = L.DomUtil.create("div", "info");
@@ -124,7 +123,6 @@ const createMap = () => {
 
     info.addTo(map);
 
-    //fonction lors d'action au hover pour  changement d'opacité (ou de couleur à voir)
     function highlightFeature(e) {
       const layer = e.target;
       const color = layer._path.getAttribute("fill");
@@ -143,21 +141,6 @@ const createMap = () => {
 
       layer.bringToFront();
 
-      // ajout d'un popup au hover avec l'année de la coulée
-      function bindPopup(feature, layer) {
-        let popupContent = `${feature.properties.annee}`;
-
-        layer.bindPopup(popupContent);
-
-        layer.on("mouseover", function (e) {
-          this.openPopup(e.latlng);
-        });
-        layer.on("mouseout", function (e) {
-          this.closePopup();
-        });
-      }
-
-      // ajout d'un popup au hover avec l'année de la coulée
       if (!L.Browser.ie && !L.Browser.opera && !L.Browser.edge) {
         layer.on("mousemove", function (e) {
           layer.bindPopup(layer.feature.properties.annee).openPopup();
@@ -165,7 +148,6 @@ const createMap = () => {
       }
     }
 
-    //fonction pour remettre la couleur d'origine
     function resetHighlight(e) {
       const color = e.target._path.getAttribute("fill");
       const tabPaths = document.querySelectorAll(".leaflet-interactive");
@@ -177,7 +159,6 @@ const createMap = () => {
       });
     }
 
-    //fonction de listener pour les actions au hover et au mouseout (ou click)
     function onEachFeature(feature, layer) {
       layer.on({
         mouseover: highlightFeature,
@@ -187,5 +168,4 @@ const createMap = () => {
   });
 };
 
-//export { createMap };
 export default createMap;
