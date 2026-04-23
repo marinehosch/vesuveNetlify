@@ -42,8 +42,8 @@ const createMap = () => {
             pane: "right",
           }).addTo(map);
 
-          if (L.control.sideBySide) {
-            L.control.sideBySide([basemap], [historicMap]).addTo(map);
+          // if (L.control.sideBySide) {
+          //   L.control.sideBySide([basemap], [historicMap]).addTo(map);
           }
 
           fixerZoom(map, 12.5);
