@@ -3,8 +3,10 @@ import * as L from "leaflet";
 import "leaflet/dist/leaflet.css";
 import parseGeoraster from "georaster";
 import GeoRasterLayer from "georaster-layer-for-leaflet";
+import proj4 from "proj4";
 
 window.L = L;
+window.proj4 = proj4;
 
 const createMap = () => {
   // Chargement dynamique du plugin pour éviter l'erreur "L is undefined"
