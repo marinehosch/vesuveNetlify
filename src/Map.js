@@ -1,4 +1,4 @@
-import { json } from "d3-fetch";
+import { json } from "d3";
 import * as L from "leaflet";
 import "leaflet/dist/leaflet.css";
 import parseGeoraster from "georaster";
