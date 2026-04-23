@@ -1,6 +1,6 @@
 import * as d3 from "d3";
 import scrollama from "scrollama";
-import createMap from "./Map";
+// import createMap from "./Map";
 
 const scrolly = d3.select("#scrolly");
 const graphic = scrolly.select(".scroll__graphic");
@@ -58,7 +58,6 @@ function loadSVG(url) {
       loadSVG("svg/volcan4.svg");
       break;
     case 4:
-      // Nettoyer le SVG
       d3.select("#mon-svg").selectAll("*").remove();
 
       if (d3.select("#map").empty()) {
@@ -72,9 +71,9 @@ function loadSVG(url) {
           .style("right", "0");
 
         // Laisser le DOM se mettre à jour avant d'initialiser Leaflet
-        setTimeout(() => {
-          createMap();
-        }, 50);
+        // setTimeout(() => {
+        //   createMap();
+        // }, 50);
       }
       break;
   }
